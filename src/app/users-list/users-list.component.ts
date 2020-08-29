@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UsersService} from '../users.service';
+import {User} from '../shared/user';
 
 @Component({
   selector: 'app-users-list',
@@ -12,7 +13,15 @@ export class UsersListComponent implements OnInit {
 
   constructor(public usersService: UsersService) { }
 
-  ngOnInit(): void {
-    this.usersList = this.usersService.getUsersList();
+  ngOnInit(): Array<User> {
+    return this.usersList = this.usersService.getUsersList();
+  }
+
+  search(value: string): Array<User> {
+    return this.usersList = this.usersService.findUserByName(value);
+  }
+
+  sort(value): Array<User> {
+    return this.usersList = this.usersService.sortUsersByAlphabet(value);
   }
 }

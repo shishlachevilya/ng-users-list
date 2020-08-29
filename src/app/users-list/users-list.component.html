@@ -1,12 +1,33 @@
-<mat-selection-list #users>
-  <mat-list-option *ngFor="let user of usersList; let i = index;">
-    <div>
-      <span>{{i + 1}} - {{user.username}}</span>
-      <span>{{user.name}}</span>
-    </div>
-  </mat-list-option>
-</mat-selection-list>
+<div class="wrap">
+  <div class="line">
+    <mat-form-field appearance="outline">
+      <mat-label>Users sorting</mat-label>
+      <mat-select (selectionChange)="sort(select.value)" #select>
+        <mat-option value="0">from A to Z</mat-option>
+        <mat-option value="1">from Z to A</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<p>
-  Options selected: {{users.selectedOptions.selected.length}}
-</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Users searching</mat-label>
+      <input matInput placeholder="Search" (keyup.enter)="search(input.value)" #input>
+      <mat-icon matSuffix (click)="search(input.value)">search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <mat-selection-list #users>
+    <mat-list-option *ngFor="let user of usersList; let i = index;">
+      <div >
+        <span>{{i + 1}} - {{user.username}}</span>{{' '}}
+        <span>{{user.name}}</span>
+      </div>
+    </mat-list-option>
+  </mat-selection-list>
+
+  <p *ngIf="usersList.length === 0">Users not found</p>
+
+  <p>
+    Options selected: {{users.selectedOptions.selected.length}}
+  </p>
+</div>
+
