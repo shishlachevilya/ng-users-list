@@ -9,6 +9,8 @@ import {UsersListComponent} from './users-list/users-list.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {MatIconModule} from '@angular/material/icon';
     MatListModule,
     MatSelectModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

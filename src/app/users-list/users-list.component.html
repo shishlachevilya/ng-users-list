@@ -1,6 +1,36 @@
 <div class="wrap">
   <div class="line">
-    <mat-form-field appearance="outline">
+    <mat-form-field class="third" appearance="outline">
+      <mat-label>User name</mat-label>
+      <input matInput placeholder="User name" (input)="valid()" [(ngModel)]="userName">
+    </mat-form-field>
+
+    <mat-form-field class="third" appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" (input)="valid()" [(ngModel)]="name">
+    </mat-form-field>
+
+    <mat-form-field class="third" appearance="outline">
+      <mat-label>Select role</mat-label>
+      <mat-select [(ngModel)]="role">
+        <mat-option value="user">User</mat-option>
+        <mat-option value="admin">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="btn">
+    <div *ngIf="isValid; else templateName">
+      <button mat-raised-button color="primary" (click)="add()">Add new user</button>
+    </div>
+
+    <ng-template #templateName>
+      <button mat-raised-button disabled>Add new user</button>
+    </ng-template>
+  </div>
+
+  <div class="line">
+    <mat-form-field class="half" appearance="outline">
       <mat-label>Users sorting</mat-label>
       <mat-select (selectionChange)="sort(select.value)" #select>
         <mat-option value="0">from A to Z</mat-option>
@@ -8,26 +38,39 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field class="half" appearance="outline">
       <mat-label>Users searching</mat-label>
       <input matInput placeholder="Search" (keyup.enter)="search(input.value)" #input>
       <mat-icon matSuffix (click)="search(input.value)">search</mat-icon>
     </mat-form-field>
   </div>
 
-  <mat-selection-list #users>
-    <mat-list-option *ngFor="let user of usersList; let i = index;">
-      <div >
-        <span>{{i + 1}} - {{user.username}}</span>{{' '}}
-        <span>{{user.name}}</span>
+  <div *ngIf="usersList.length > 0; else empty">
+    <mat-selection-list #users (selectionChange)="selectItem(users.selectedOptions.selected)">
+      <mat-list-option
+        [value]="user"
+        *ngFor="let user of usersList; let i = index;"
+        [ngClass]="{'gray': i%2}"
+      >
+        <div>
+          <span>{{i + 1}} - {{user.username}}</span>{{' - '}}
+          <span>{{user.name}}</span>{{' - '}}
+          <span>{{user.role}}</span>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+
+    <div class="line">
+      <div>Options selected: {{users.selectedOptions.selected.length}}</div>
+
+      <div>
+        <button mat-raised-button color="warn" (click)="deleteUsers()">Remove</button>
       </div>
-    </mat-list-option>
-  </mat-selection-list>
+    </div>
+  </div>
 
-  <p *ngIf="usersList.length === 0">Users not found</p>
-
-  <p>
-    Options selected: {{users.selectedOptions.selected.length}}
-  </p>
+  <ng-template #empty>
+    <p>Users not found</p>
+  </ng-template>
 </div>
 
